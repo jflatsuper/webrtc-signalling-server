@@ -1,4 +1,4 @@
-let port = process.env.PORT || 5000;
+let port = process.env.PORT || 6000;
 
 let IO = require("socket.io")(port, {
   cors: {
@@ -21,21 +21,20 @@ IO.on("connection", (socket) => {
 
   socket.on("makeCall", (data) => {
     let calleeId = data.calleeId;
-    let sdpOffer = data.sdpOffer;
-
+    let rtcMessage = data.rtcMessage;
     socket.to(calleeId).emit("newCall", {
       callerId: socket.user,
-      sdpOffer: sdpOffer,
+      rtcMessage: rtcMessage,
     });
   });
 
   socket.on("answerCall", (data) => {
     let callerId = data.callerId;
-    let sdpAnswer = data.sdpAnswer;
+    let rtcMessage = data.rtcMessage;
 
     socket.to(callerId).emit("callAnswered", {
       callee: socket.user,
-      sdpAnswer: sdpAnswer,
+      rtcMessage: rtcMessage,
     });
   });
 
