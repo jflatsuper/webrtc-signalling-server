@@ -38,11 +38,11 @@ IO.on("connection", (socket) => {
     });
   });
 
-  socket.on("IceCandidate", (data) => {
+  socket.on("ICEcandidate", (data) => {
     let calleeId = data.calleeId;
-    let iceCandidate = data.iceCandidate;
+    let iceCandidate = data.rtcMessage;
 
-    socket.to(calleeId).emit("IceCandidate", {
+    socket.to(calleeId).emit("ICEcandidate", {
       sender: socket.user,
       iceCandidate: iceCandidate,
     });
